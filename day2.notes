@@ -1,0 +1,58 @@
+-----------------------------------------------------------
+  EXPRESS NOTES
+-----------------------------------------------------------
+
+------------------------SERVERS----------------------------
+[js]
+const http = require('http');
+const server = http.createServer((request, response) => {
+  // magic happens here!
+});
+[/js]
+-----------------------------------------------------------
+[js]
+const http = require('http');
+const server = http.createServer();
+
+server.on('request', (request, response) => {
+  // the same kind of magic happens here!
+});
+[/js]
+----------------------------------------------------------
+- request: client/browser asking about what to do
+- response: server responding with html/js
+--------------------------------------------------------
+    Request keys
+-----------------------------------------------------------
+ # request.method;
+ # request.url;
+ # request.end;
+ # request.statuscode;
+-----------------------------------------------------------
+    Route variable
+-----------------------------------------------------------
+
+[js]
+   let route = request.method + ' ' + request.url;
+   let conditonal = 'Get /toronto/today'
+   if (route === conditonal) {
+    response.end(function {
+   // magic happens here
+      });
+   };
+[\js]
+------------------------------------------------------------
+
+-----------------------------------------------------------
+    Express app
+    //npm install express
+    // require express
+-----------------------------------------------------------
+
+
+
+
+<app.get>
+
+
+
