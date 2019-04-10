@@ -10,7 +10,7 @@ app.set("view engine", "ejs");
 const bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 
-
+const users = {};
 
 var urlDatabase = {
   "b2xVn2": "http://www.lighthouselabs.ca",
@@ -79,10 +79,26 @@ app.post("/urls/:shortURL/edit", (req, res) => {
   // console.log(urlDatabase);
   res.redirect(`/urls/`);
 });
-
+app.get('/register',(req,res) =>{
+  res.render('Registration')
+});
 // this is the app.post for urls
 // it deletes a key vaule pair in the global url database object
 //------------------------------------------------
+app.post('/register',(req,res) => {
+  let newuser = {
+    id: generateRandomString(),
+    email: req.body.email ,
+    password: req.body.password ,
+  }
+  console.log(newuser)
+  users[newuser.id] = newuser;
+  console.log(users)
+  res.cookie('user_id', users[newuser.id].id)
+  res.redirect('/urls')
+
+});
+
 app.post("/urls/:shortURL/delete", (req, res) => {
   // console.log(res.statuscode);  // Log the POST request body to the console
   delete urlDatabase[req.params.shortURL]
