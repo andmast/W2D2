@@ -19,7 +19,19 @@ var urlDatabase = {
 
 function generateRandomString() {
    return Math.random().toString(36).substring(2,8)
-}
+};
+
+function emailLookUp(email){
+
+  for(key in users){
+    let check = users[key].email
+    if(check === email){
+      return true
+    } else{
+      return false
+  }
+
+};
 // this is the app.get for  urls/hello
 // reqires express:1 see below and esj:2 see below
 
@@ -86,6 +98,13 @@ app.get('/register',(req,res) =>{
 // it deletes a key vaule pair in the global url database object
 //------------------------------------------------
 app.post('/register',(req,res) => {
+  if (!req.body.email || !req.body.password){
+    res.status(400).send();
+  }
+  if (){
+
+  }
+
   let newuser = {
     id: generateRandomString(),
     email: req.body.email ,
@@ -96,7 +115,6 @@ app.post('/register',(req,res) => {
   console.log(users)
   res.cookie('user_id', users[newuser.id].id)
   res.redirect('/urls')
-
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
