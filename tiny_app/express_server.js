@@ -87,10 +87,17 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   // console.log(urlDatabase);
   res.redirect(`/urls`);
 });
-
 //------------------------------------------------
 
-//------------------------------------------------
+app.post("/login",(req,res) =>{
+  console.log(req.body.name);
+
+
+
+
+
+
+});
 
 
 // this is the app.post for urls
