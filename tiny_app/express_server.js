@@ -29,6 +29,8 @@ app.get("/hello", (req, res) => {
 });
 //------------------------------------------------
 
+
+
 // this is the app.get for urls
 // reqires express:1 see above and esj:2 see above
 //------------------------------------------------
@@ -38,13 +40,13 @@ app.get("/urls", (req, res) => {
 });
 
 
-// this is the app.get for urls
-// reqires express:1 see above and esj:2 see above
-//-----------------------------------------------
-app.get("/urls/new", (req, res) => {
-  res.render("urls_new");
-});
-//------------------------------------------------
+// // this is the app.get for urls
+// // reqires express:1 see above and esj:2 see above
+// //-----------------------------------------------
+ app.get("/urls/new", (req, res) => {
+   res.render("urls_new");
+ });
+// //------------------------------------------------
 
 
 
@@ -56,6 +58,17 @@ app.get("/urls/:shortURL", (req, res) => {
   res.render("urls_show", templateVars);
 });
 //------------------------------------------------
+app.post("/urls/:shortURL", (req, res) => {
+  let url = req.params.shortURL
+  res.redirect(`/urls/${url}`);
+});
+
+app.post("/urls/:shortURL/edit", (req, res) => {
+   urlDatabase[req.params.shortURL] = req.body.longURL  // Log the POST request body to the console
+
+  // console.log(urlDatabase);
+  res.redirect(`/urls/`);
+});
 
 // this is the app.post for urls
 // it deletes a key vaule pair in the global url database object
@@ -63,12 +76,13 @@ app.get("/urls/:shortURL", (req, res) => {
 app.post("/urls/:shortURL/delete", (req, res) => {
   // console.log(res.statuscode);  // Log the POST request body to the console
   delete urlDatabase[req.params.shortURL]
-
   // console.log(urlDatabase);
   res.redirect(`/urls`);
 });
+
 //------------------------------------------------
 
+//------------------------------------------------
 
 
 // this is the app.post for urls
@@ -87,13 +101,11 @@ app.post("/urls", (req, res) => {
 //------------------------------------------------
 
 
-// this is the app.post for urls
-// reqires express:1
-//------------------------------------------------
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });
-//------------------------------------------------
+
 
 
 

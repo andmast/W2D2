@@ -9,10 +9,12 @@
 
 </head>
 <body style="font-size:20px; padding:50px;">
-<header>
     <% include ../partials/_header %>
-</header>
-    <h2>Tiny Url for <%=longURL%> </h2>
-    <h3><a><%=shortURL%><a></h3>
+    <h2>ShortURL:<%=shortURL%></h2>
+
+    <form method="POST" action="/urls/<%=shortURL%>/edit" class="form-inline"   >
+      <input type="text" name="longURL"  value ="<%=longURL%>">
+      <button type= "sumbit" >Update</button>
+    </form>
 </body>
 </html>
