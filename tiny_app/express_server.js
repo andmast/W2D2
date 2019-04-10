@@ -57,6 +57,18 @@ app.get("/urls/:shortURL", (req, res) => {
 });
 //------------------------------------------------
 
+// this is the app.post for urls
+// it deletes a key vaule pair in the global url database object
+//------------------------------------------------
+app.post("/urls/:shortURL/delete", (req, res) => {
+  // console.log(res.statuscode);  // Log the POST request body to the console
+  delete urlDatabase[req.params.shortURL]
+
+  // console.log(urlDatabase);
+  res.redirect(`/urls`);
+});
+//------------------------------------------------
+
 
 
 // this is the app.post for urls
@@ -69,7 +81,7 @@ app.post("/urls", (req, res) => {
   // console.log(res.statuscode);  // Log the POST request body to the console
   let key = generateRandomString()
   urlDatabase[key] = req.body.longURL;
-  // console.log(urlDatabase);
+  console.log(urlDatabase);
   res.redirect(`/urls/${key}`);
 });
 //------------------------------------------------

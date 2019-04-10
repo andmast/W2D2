@@ -14,7 +14,8 @@
   <ul>
       <% for(x in urls) { %>
           <li><strong><%= x %></strong>: <a href="<%= urls[x] %>"><%= urls[x] %></a></li>
-          <form method="POST" action=<%='/urls/${x}/delete'%>><button>delete</button></form>
+          <form method="POST" action=<%= `/urls/${x}/delete` %>>
+            <button>delete</button></form>
       <% }; %>
   </ul>
 </body>
