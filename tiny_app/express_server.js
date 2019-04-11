@@ -15,10 +15,6 @@ app.use(function(req, res, next) {
 })
 
 const users = {};
-const urlDatabase = {
-  b6UTxQ: { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
-  i3BoGr: { longURL: "https://www.google.ca", userID: "aJ48lW" }
-};
 console.log(users)
 
 function generateRandomString() {
@@ -35,11 +31,11 @@ function emailLookUp(email){
 };
 
 app.get("/", (req, res) => {
-  res.render("login");
+  res.redirect("/login");
 });
 
 
-app.get("/u/:shortURL", (req, res) => {
+app.get("/u/urls/:shortURL", (req, res) => {
   const longURL = urlDatabase[req.params.shortURL];
   res.redirect(longURL);
 });
@@ -81,7 +77,8 @@ app.post("/urls/:shortURL/edit", (req, res) => {
 });
 
 app.get('/register',(req,res) =>{
-  res.render('Registration')
+  let templateVars = {username: res.cookie["username"]}
+    res.render('Registration',templateVars)
 });
 
 app.post('/register',(req,res) => {
@@ -92,6 +89,7 @@ app.post('/register',(req,res) => {
     return res.status(400).send("Email in use try again");
   }
   let newuser = {
+    username: true,
     id: generateRandomString(),
     email: req.body.email ,
     password: req.body.password ,
@@ -114,7 +112,8 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 
 
 app.get("/login",(req,res)=>{
-  res.render("login");
+  let templateVars = {username: res.cookie["username"]}
+  res.render("login",templateVars);
 });
 
 
