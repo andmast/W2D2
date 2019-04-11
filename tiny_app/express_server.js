@@ -22,7 +22,6 @@ function generateRandomString() {
 };
 
 function emailLookUp(email){
-
   for(key in users){
     let check = users[key].email
     console.log("check:",check)
@@ -59,6 +58,9 @@ app.get("/u/:shortURL", (req, res) => {
 // reqires express:1 see above and esj:2 see above
 //------------------------------------------------
 app.get("/urls", (req, res) => {
+  let cookie_user_id =('Cookies: ', req.cookies).user_id
+  console.log("users cookie",users[cookie_user_id]);
+
   let templateVars = {username: req.cookies["username"],urls: urlDatabase}
   res.render("urls_index", templateVars);
 });
@@ -107,7 +109,6 @@ app.post('/register',(req,res) => {
   if (emailLookUp(req.body.email)){
     return res.status(400).send();
   }
-
   let newuser = {
     id: generateRandomString(),
     email: req.body.email ,
