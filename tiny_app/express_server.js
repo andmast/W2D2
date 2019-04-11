@@ -15,6 +15,10 @@ app.use(function(req, res, next) {
 })
 
 const users = {};
+const urlDatabase = {
+  b6UTxQ: { longURL: "https://www.tsn.ca", userID: "aJ48lW" },
+  i3BoGr: { longURL: "https://www.google.ca", userID: "aJ48lW" }
+};
 console.log(users)
 
 function generateRandomString() {
@@ -30,30 +34,10 @@ function emailLookUp(email){
   }
 };
 
-function loggedIn(user_id) {
-  // if ()
-
-
-
-
-
-};
-
-
-
-
-// this is the app.get for  urls/hello
-// reqires express:1 see below and esj:2 see below
-
-// 1: var express = require("express");
-//    var app = express();
-
-// 2: app.set("view engine", "ejs");
-//------------------------------------------------
 app.get("/", (req, res) => {
   res.render("login");
 });
-//------------------------------------------------
+
 
 app.get("/u/:shortURL", (req, res) => {
   const longURL = urlDatabase[req.params.shortURL];
@@ -61,38 +45,25 @@ app.get("/u/:shortURL", (req, res) => {
 });
 
 
-// this is the app.get for urls
-// reqires express:1 see above and esj:2 see above
-//------------------------------------------------
 app.get("/urls", (req, res) => {
   let cookie_user_id = ('Cookies: ', req.cookies).user_id
   let templateVars = users[cookie_user_id]
   res.render("urls_index", templateVars);
 });
 
-
-// // this is the app.get for urls
-// // reqires express:1 see above and esj:2 see above
-// //-----------------------------------------------
  app.get("/urls/new", (req, res) => {
   let cookie_user_id = ('Cookies: ', req.cookies).user_id
 
   let templateVars = users[cookie_user_id]
   res.render("urls_new",templateVars);
  });
-// //------------------------------------------------
 
-
-
-// this is the app.get for urls
-// reqires express:1 see above and esj:2 see above
-//------------------------------------------------
 app.get("/urls/:shortURL", (req, res) => {
   let cookie_user_id = ('Cookies: ', req.cookies).user_id
   let templateVars = users[cookie_user_id]
   res.render("urls_show", templateVars);
 });
-//------------------------------------------------
+
 app.post("/urls/:shortURL", (req, res) => {
   let url = req.params.shortURL
   res.redirect(`/urls/${url}`);
@@ -112,7 +83,6 @@ app.post("/urls/:shortURL/edit", (req, res) => {
 app.get('/register',(req,res) =>{
   res.render('Registration')
 });
-
 
 app.post('/register',(req,res) => {
   if (!req.body.email || !req.body.password){
@@ -138,7 +108,6 @@ app.post('/register',(req,res) => {
 
 app.post("/urls/:shortURL/delete", (req, res) => {
   let cookie_user_id = ('Cookies: ', req.cookies).user_id
-
   delete users[cookie_user_id].urlDatabase[req.params.shortURL]
   res.redirect(`/urls`);
 });
@@ -147,7 +116,6 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 app.get("/login",(req,res)=>{
   res.render("login");
 });
-
 
 
 app.post("/login",(req,res) => {
