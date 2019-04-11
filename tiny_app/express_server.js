@@ -76,7 +76,10 @@ app.get("/urls", (req, res) => {
 // // reqires express:1 see above and esj:2 see above
 // //-----------------------------------------------
  app.get("/urls/new", (req, res) => {
-  let templateVars = {username: req.cookies["username"],urls: urlDatabase}
+  let cookie_user_id = ('Cookies: ', req.cookies).user_id
+  console.log("users cookie",users[cookie_user_id]);
+
+  let templateVars = users[cookie_user_id]
   res.render("urls_new",templateVars);
  });
 // //------------------------------------------------
@@ -87,7 +90,10 @@ app.get("/urls", (req, res) => {
 // reqires express:1 see above and esj:2 see above
 //------------------------------------------------
 app.get("/urls/:shortURL", (req, res) => {
-  let templateVars = { username: req.cookies["username"],shortURL: req.params.shortURL, longURL: urlDatabase[req.params.shortURL] };
+  let cookie_user_id = ('Cookies: ', req.cookies).user_id
+  console.log("users cookie",users[cookie_user_id]);
+
+  let templateVars = users[cookie_user_id]
   res.render("urls_show", templateVars);
 });
 //------------------------------------------------
@@ -135,9 +141,9 @@ app.post("/urls/:shortURL/delete", (req, res) => {
   console.log("users cookie",users[cookie_user_id]);
 
   delete users[cookie_user_id].urlDatabase[req.params.shortURL]
-  // console.log(urlDatabase);
   res.redirect(`/urls`);
 });
+
 //------------------------------------------------
 
 app.post("/login",(req,res) => {
@@ -154,18 +160,13 @@ app.get("/logout",(req,res) => {
   res.redirect("/login");
 });
 
-// this is the app.post for urls
-// reqires express:1 see above + esj:2 see above and bodyparser:3 see below
 
-// 3: const bodyParser = require("body-parser");
-//    app.use(bodyParser.urlencoded({extended: true}));
 //-----------------------------------------------
 app.post("/urls", (req, res) => {
-  // console.log(res.statuscode);  // Log the POST request body to the console
   let key = generateRandomString()
-  urlDatabase[key] = req.body.longURL;
-  console.log(urlDatabase);
-  res.redirect(`/urls/${key}`);
+  let cookie_user_id = ('Cookies: ', req.cookies).user_id
+  users[cookie_user_id].urlDatabase[key] = req.body.longURL;
+  res.redirect(`/urls`);
 });
 //------------------------------------------------
 
