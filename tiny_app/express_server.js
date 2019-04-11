@@ -25,12 +25,15 @@ function emailLookUp(email){
 
   for(key in users){
     let check = users[key].email
+    console.log("check:",check)
     if(check === email){
+      console.log(true)
       return true
     } else{
+      console.log(false)
       return false
+    }
   }
-
 };
 // this is the app.get for  urls/hello
 // reqires express:1 see below and esj:2 see below
@@ -99,10 +102,10 @@ app.get('/register',(req,res) =>{
 //------------------------------------------------
 app.post('/register',(req,res) => {
   if (!req.body.email || !req.body.password){
-    res.status(400).send();
+    return res.status(400).send();
   }
-  if (){
-
+  if (emailLookUp(req.body.email)){
+    return res.status(400).send();
   }
 
   let newuser = {
