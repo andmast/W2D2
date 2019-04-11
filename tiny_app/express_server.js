@@ -111,9 +111,12 @@ app.post("/urls/:shortURL/edit", (req, res) => {
 app.get('/register',(req,res) =>{
   res.render('Registration')
 });
-// this is the app.post for urls
-// it deletes a key vaule pair in the global url database object
-//------------------------------------------------
+
+app.get('/login',(req,res)=>{
+
+});
+
+
 app.post('/register',(req,res) => {
   if (!req.body.email || !req.body.password){
     return res.status(400).send('please enter email or password');
