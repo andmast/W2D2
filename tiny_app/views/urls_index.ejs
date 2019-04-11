@@ -12,10 +12,10 @@
   <% include ../partials/_header %>
   <h3>My URLS</h3>
   <ul>
-      <% for(key in urls) { %>
+      <% for(key in urlDatabase) { %>
           <li>
              <a href="/u/<%= key%>"><%= key %></a> :
-            <%= urls[key] %>
+            <%= urlDatabase[key] %>
           </li>
         <form method="POST" action= "/urls/<%= key %>/delete">
           <button>
@@ -24,7 +24,7 @@
         </form>
         <form method="POST" action="/urls/<%= key %>">
           <button>
-            Update
+            Edit
           </button>
         </form>
       <% }; %>

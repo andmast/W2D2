@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <header>
 
   <h1>Tiny App</h1>
@@ -7,12 +7,11 @@
     <a href="/urls/new">Create new tiny URL</a>|
     <a href="/urls">List of Tiny urls</a>
   </p>
-  <% if(username){ %>
-     <p>Logged in as:<%= username %><a href="/logout">Logout</a></p>
+  <% if(email){ %>
+     <p>Logged in as:<%= email %><a href="/logout">Logout</a></p>
    <% } else{ %>
      <form method="POST" action= "/login">
-       <input type="text" name="username">
-       <button type="submit" > Submit </button>
+      <button>Please log in</button>
      </form>
   <% } %>
 
