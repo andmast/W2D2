@@ -103,18 +103,20 @@ app.post("/urls/:shortURL", (req, res) => {
 });
 
 app.post("/urls/:shortURL/edit", (req, res) => {
-   urlDatabase[req.params.shortURL] = req.body.longURL  // Log the POST request body to the console
+  let cookie_user_id = ('Cookies: ', req.cookies).user_id
+  let key = req.params.shortURL;
+  let templateVars = {
+    shortURL: key,
+    longURL: users[cookie_user_id].urlDatabase[req.params.shortURL] } ;
+  console.log(templateVars);
 
-  // console.log(urlDatabase);
-  res.redirect(`/urls/`);
+  res.redirect(`/urls/${key}`, templateVars);
 });
+
 app.get('/register',(req,res) =>{
   res.render('Registration')
 });
 
-app.get('/login',(req,res)=>{
-
-});
 
 
 app.post('/register',(req,res) => {
@@ -148,12 +150,17 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 });
 
 //------------------------------------------------
+app.get("/login",(req,res)=>{
+  res.render("login");
+});
+
+
 
 app.post("/login",(req,res) => {
   // if ()
   let cookie_user_id = ('Cookies: ', req.cookies).user_id
   let templateVars = users[cookie_user_id]
-  res.redirect("/urls",templateVars);
+  res.render("login",templateVars);
 });
 
 
