@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <header>
-
   <h1>Tiny App</h1>
 
-  <p>
-    <a href="/urls/new">Create new tiny URL</a>|
-    <a href="/urls">List of Tiny urls</a>
-  </p>
-  <% if(email){ %>
-     <p>Logged in as:<%= email %><a href="/logout">Logout</a></p>
+  <% if(false){ %>
+    <p>Logged in as:<%= email %>
+      <a href="/logout">Logout</a>
+    </p>
+      <a href="/urls/new">Create new tiny URL </a>
+      <a href="/urls">List of Tiny urls</a>
    <% } else{ %>
-     <form method="POST" action= "/login">
-      <button>Please log in</button>
-     </form>
+
+      <a href="/login">Login</a>|
+      <a href="/register">Register</a>
   <% } %>
 
 </header>
