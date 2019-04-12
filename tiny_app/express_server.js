@@ -30,8 +30,22 @@ function emailLookUp(email){
   }
 };
 
+function notloggedIn(cookie){
+  if(cookie === undefined){
+    console.log(true)
+    return true
+  } else {
+    console.log(true)
+    return false
+  }
+};
+
 app.get("/", (req, res) => {
-  res.redirect("/login");
+  if(notloggedIn(res.cookie.username)){
+    res.redirect("/login");
+  } else {
+    res.redirect("/urls")
+  }
 });
 
 
@@ -42,18 +56,35 @@ app.get("/u/urls/:shortURL", (req, res) => {
 
 
 app.get("/urls", (req, res) => {
-  let cookie_user_id = ('Cookies: ', req.cookies).user_id
-  let templateVars = users[cookie_user_id]
-  res.render("urls_index", templateVars);
+  if(notloggedIn(res.cookie.username)){
+    return res.status(400).send('please login')
+  } else {
+    let cookie_user_id = ('Cookies: ', req.cookies).user_id
+    let templateVars = users[cookie_user_id]
+    console.log(templateVars);
+    res.render("urls_index", templateVars);
+  }
 });
 
  app.get("/urls/new", (req, res) => {
-  let cookie_user_id = ('Cookies: ', req.cookies).user_id
-
-  let templateVars = users[cookie_user_id]
-  res.render("urls_new",templateVars);
+  if(notloggedIn(res.cookie.username)){
+    return res.redirect("/login")
+  } else {
+    let cookie_user_id = ('Cookies: ', req.cookies).user_id
+    let templateVars = users[cookie_user_id]
+    console.log(templateVars);
+    res.render("urls_new",templateVars);
+  }
  });
 
+app.get("/urls/id", (req,res) =>{
+  if(notloggedIn(res.cookie.username)){
+    return res.status(400).send('please enter email or password');
+  } else {
+
+  }
+
+});
 app.get("/urls/:shortURL", (req, res) => {
   let cookie_user_id = ('Cookies: ', req.cookies).user_id
   let templateVars = users[cookie_user_id]
@@ -84,24 +115,25 @@ app.get('/register',(req,res) =>{
 app.post('/register',(req,res) => {
   if (!req.body.email || !req.body.password){
     return res.status(400).send('please enter email or password');
-  }
-  if (emailLookUp(req.body.email)){
+  } else if (emailLookUp(req.body.email)){
     return res.status(400).send("Email in use try again");
-  }
-  let newuser = {
+  } else {
+    let newuser = {
     username: true,
     id: generateRandomString(),
     email: req.body.email ,
     password: req.body.password ,
     urlDatabase: {
-    "test": "testing"
+    "Welcome": "https://www.lighthouselabs.ca"
     }
   };
   console.log(newuser)
   users[newuser.id] = newuser;
   console.log(users)
   res.cookie('user_id', users[newuser.id].id)
-  res.redirect('/login')
+  res.redirect('/urls')
+  }
+
 });
 
 app.post("/urls/:shortURL/delete", (req, res) => {
@@ -120,13 +152,13 @@ app.get("/login",(req,res)=>{
 app.post("/login",(req,res) => {
   let check = emailLookUp(req.body.email)
   if (check === undefined){
-    res.redirect("/register");
+    res.status(400).send("No account registered. Please register");;
   } else if (check.email === req.body.email && check.password === req.body.password) {
     res.cookie('user_id', check.id)
     console.log("email",check.email,"password",check.password);
     res.redirect("/urls");
   } else if (check.mail !== req.body.mail){
-    res.status(400).send("No account registered. Please register");
+    res.status(400).send("Wrong Email");
   } else if (check.password !== req.body.password){
     res.status(400).send("wrong password");
   }
